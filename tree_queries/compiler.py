@@ -30,8 +30,8 @@ class TreeCompiler(SQLCompiler):
     ) AS (
         SELECT
             0 AS tree_depth,
-            array[T.{pk}] AS tree_path,
-            array[LPAD(CONCAT({order_by}), 20, '0')]::text[] AS tree_ordering,
+            array[T.{pk}||'']::varchar[] AS tree_path,
+            array[LPAD(CONCAT({order_by}), 20, '0')]::varchar[] AS tree_ordering,
             T."{pk}"
         FROM {db_table} T
         WHERE T."{parent}" IS NULL
@@ -41,7 +41,7 @@ class TreeCompiler(SQLCompiler):
         SELECT
             __tree.tree_depth + 1 AS tree_depth,
             __tree.tree_path || T.{pk},
-            __tree.tree_ordering || LPAD(CONCAT({order_by}), 20, '0')::text,
+            __tree.tree_ordering || LPAD(CONCAT({order_by}), 20, '0')::varchar,
             T."{pk}"
         FROM {db_table} T
         JOIN __tree ON T."{parent}" = __tree.tree_pk
