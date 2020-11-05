@@ -57,7 +57,7 @@ class TreeCompiler(SQLCompiler):
     ) AS (
         SELECT
             0 AS tree_depth,
-            array[T.{pk}] AS tree_path,
+            array[T.{pk}||'']::varchar[] AS tree_path,
             array[{order_by}] AS tree_ordering,
             T."{pk}"
         FROM {db_table} T
