@@ -93,7 +93,7 @@ class TreeQuerySet(models.QuerySet):
         connection = connections[self.db]
         if connection.vendor == "postgresql":
             queryset = self.with_tree_fields().extra(
-                where=["{pk} = ANY(__tree.tree_path)".format(pk=pk(of))]
+                where=["'{pk}' = ANY(__tree.tree_path)".format(pk=pk(of))]
             )
 
         else:
