@@ -40,7 +40,7 @@ class TreeCompiler(SQLCompiler):
 
         SELECT
             __tree.tree_depth + 1 AS tree_depth,
-            __tree.tree_path || T.{pk},
+            __tree.tree_path || T.{pk}::varchar,
             __tree.tree_ordering || LPAD(CONCAT({order_by}), 20, '0')::varchar,
             T."{pk}"
         FROM {db_table} T
@@ -67,7 +67,7 @@ class TreeCompiler(SQLCompiler):
 
         SELECT
             __tree.tree_depth + 1 AS tree_depth,
-            __tree.tree_path || T.{pk},
+            __tree.tree_path || T.{pk}::varchar,
             __tree.tree_ordering || {order_by},
             T."{pk}"
         FROM {db_table} T
